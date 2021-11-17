@@ -110,7 +110,7 @@ export default {
 .login_frame {
   width: 100%;
   height: 100%;
-  background-color: #2b4b6b;
+  background-image: linear-gradient(45deg, #ee9ca7 0%, #ffdde1 100%);
 }
 .login_box {
   width: 450px;

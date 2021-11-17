@@ -2,11 +2,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/Login'
 import Home from "../components/Home"
+import Welcome from '../components/Welcome'
+import Users from '../components/users/Users'
 
 Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: [
+    //访问网页，重定向为登录页面
     { path: '/', redirect: '/login' },
     { path: '/login', component: Login },
     {
@@ -18,7 +21,13 @@ const router = new VueRouter({
         const tokenStr = window.sessionStorage.getItem('token')
         if(!tokenStr) next('/login')
         next()
-      }
+      },
+      children:[
+        { path: '/welcome', component: Welcome },
+        { path: '/users', component: Users }
+      ],
+      //进入 home 重定向为 welcome
+      redirect: '/welcome'
     }
   ]
 })

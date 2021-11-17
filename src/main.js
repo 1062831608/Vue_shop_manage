@@ -8,6 +8,12 @@ import './assets/css/global.css'
 import axios from 'axios'
 //配置axios请求跟路径
 axios.defaults.baseURL="http://127.0.0.1:8888/api/private/v1/"
+//设置axios拦截器，保证授权才可以访问授权接口
+axios.interceptors.request.use(config=>{
+  config.headers.Authorization = window.sessionStorage.getItem('token')
+  //必须要返回 config
+  return config
+})
 //Vue原型上挂载axios
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
