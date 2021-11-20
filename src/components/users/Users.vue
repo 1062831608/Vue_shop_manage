@@ -168,8 +168,47 @@
                type="warning"
                icon="el-icon-s-help"
                size="mini"
+               @click="showSetUserDialog(scope.row)"
              ></el-button>
            </el-tooltip>
+          <el-dialog
+            title="分配角色"
+            :visible.sync="setUserRolesDialogVisible"
+            width="50%"
+            >
+            <el-row>
+              <el-col :span="24">
+                <p>当前用户：{{ currentUserInfo.username }}</p>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="24">
+                <p>当前角色：{{ currentUserInfo.role_name }}</p>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="4"><p>选择角色：</p></el-col>
+              <el-col :span="20">
+                <el-select
+                  v-model="selectRulesId"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in getRolesData"
+                    :key="item.id"
+                    :label="item.roleName"
+                    :value="item.id"
+                  >
+                  </el-option>
+                </el-select>
+              </el-col>
+            </el-row>
+            <span slot="footer" class="dialog-footer">
+    <el-button @click="setUserRolesDialogVisible = false">取 消</el-button>
+<!--              设置用户角色-->
+    <el-button type="primary" @click="setUserRoles">确 定</el-button>
+  </span>
+          </el-dialog>
         </template>
       </el-table-column>
     </el-table>
@@ -178,7 +217,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="queryInfo.pagenum"
-      :page-sizes="[1,2,5,7]"
+      :page-sizes="[3,5,7]"
       :page-size="queryInfo.pagesize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="pageTotal">
@@ -212,7 +251,7 @@ export default {
       if (value === '') {
         callback(new Error('手机号不可以为空'))
       }else {
-        let reg=/^[1][3,4,5,7,8][0-9]{9}$/
+        let reg=/^1[3-9]\d{9}$/
         if(!reg.test(value)) {
           callback(new Error('手机号格式不正确'))
         } else {
@@ -225,7 +264,7 @@ export default {
       queryInfo: {
         query: '', //查询参数，搜索功能携带此参数
         pagenum: 1,  //第几页
-        pagesize: 2  //一个几个数据
+        pagesize: 3  //一个几个数据
       },
       //服务器传来的管理员名单
       userList: [],
@@ -267,7 +306,15 @@ export default {
         mobile: ''
       },
       //修改当前数据的用户名
-      updateUserName: '张三'
+      updateUserName: '张三',
+      //控制分配用户角色的dialog
+      setUserRolesDialogVisible: false,
+      //当前用户的信息
+      currentUserInfo:{},
+      //角色的信息
+      getRolesData:[],
+      //选择的角色的值
+      selectRulesId:''
     }
   },
   methods: {
@@ -468,6 +515,58 @@ export default {
           showClose: true
         });
       });
+    },
+    //打开设置用户角色的dialog
+    showSetUserDialog(roles){
+      this.selectRulesId='' //点开后重置select框的值
+      this.currentUserInfo = roles //将当前用户的角色信息设置在页面中
+      //获取角色列表
+      this.$http.get('roles')
+      .then(({data:res})=>{
+        if(res.meta.status != 200) {
+          this.$message({
+            type:'error',
+            message:'服务器出小差了！'
+          })
+          return false
+        }else {
+          this.getRolesData = res.data
+        }
+      }).catch((err)=>{
+        console.log(err)
+      })
+      this.setUserRolesDialogVisible=true//打开dialog
+
+    },
+    //设置用户角色
+    setUserRoles(){
+      this.setUserRolesDialogVisible = false
+      const uId = this.currentUserInfo.id
+      const rId = this.selectRulesId
+      this.$confirm('确认设置权限吗', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$http.put(`users/${uId}/role`,
+          {rid:rId})
+          .then(({data: res})=>{
+            if(res.meta.status != 200) {
+              this.$message({type:'error',message:'更新失败！',showClose:true})
+              return false
+            }else {
+              this.getUserList()
+              this.$message({type:'success',message:'更新成功！',showClose:true})
+            }
+          }).catch((err)=>{
+          console.log(err)
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消授权'
+        });
+      });
     }
     }
 }
@@ -481,5 +580,8 @@ export default {
 .form-btn {
   width: 15%;
   transform: translateY(200%);
+}
+.el-col{
+  margin-bottom: 15px;
 }
 </style>

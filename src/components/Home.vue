@@ -185,7 +185,6 @@ export default {
   //展开关闭导航栏按钮
   .toggle-button{
     width: 100%;
-    height: 6%;
     background-color: #000;
     text-align: center;
     color: #ffffff;
@@ -196,5 +195,7 @@ export default {
 }
 .home-main {
   background-color: #eaedf1;
+  height: 100%;
+  overflow: auto;
 }
 </style>

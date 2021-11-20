@@ -2,15 +2,19 @@
 html,body,#app {
     height: 100%;
     width: 100%;
+    min-width: 700px;
 }
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'SimSun-ExtB';
+    font-weight: 700;
 }
 .el-breadcrumb {
     margin-bottom: 20px;
     font-size: 15px;
+    font-family: "Microsoft YaHei";
 }
 .el-card {
     box-shadow: 0 1px 1px #ccc !important;

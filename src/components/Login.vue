@@ -80,6 +80,7 @@ export default {
           if(res.data.meta.status === 200) {
             //服务端token 存储本地
             window.sessionStorage.setItem('token',res.data.data.token)
+            window.sessionStorage.setItem('uName',this.loginForm.username)
             this.$message({   //弹框
               message: '登录成功，欢迎回来',
               type: 'success'
@@ -99,6 +100,7 @@ export default {
         })
       })
     },
+    //重置登录表单
     restLoginForm(){
       this.$refs.loginFormRef.resetFields()
     }
