@@ -8,8 +8,10 @@
       class="home-head"
     >
       <div>
-        <img src="../assets/heima.png" alt="">
-        <span>电商管理系统</span>
+        <el-avatar :size="60" src="https://empty" @error="errorHandler">
+          <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"/>
+        </el-avatar>
+        <span>不太正经的电商管理系统</span>
       </div>
       <el-button
         type="info"
@@ -157,7 +159,7 @@ export default {
   div {
     display: flex;
     justify-content: space-between;
-    width: 17%;
+    width: 23%;
     height: 100%;
     img {
       height: 100%;
