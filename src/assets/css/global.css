@@ -27,3 +27,4 @@ html,body,#app {
 .el-pagination {
     margin-top: 20px;
 }
+.el-scrollbar__wrap{ height: 200px !important; }

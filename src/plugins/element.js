@@ -3,7 +3,8 @@ import {
   Button, Form, FormItem, Input, Icon, Message, Container, Main,
   Aside, Header, MenuItemGroup, MenuItem, Submenu, Menu, Breadcrumb,
   BreadcrumbItem, Card, Table, TableColumn, Switch, Row, Col,
-  Tooltip, Pagination, Dialog, MessageBox,Tag, Tree,Select, Option
+  Tooltip, Pagination, Dialog, MessageBox,Tag, Tree,Select, Option,
+  Cascader, Avatar, Alert, Tabs, TabPane
 } from 'element-ui'
 
 Vue.use(Button)
@@ -34,6 +35,11 @@ Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Cascader)
+Vue.use(Avatar)
+Vue.use(Alert)
+Vue.use(Tabs)
+Vue.use(TabPane)
 //Message挂载
 Vue.prototype.$message = Message
 //MessageBox 挂载

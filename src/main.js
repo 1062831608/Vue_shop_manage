@@ -4,6 +4,8 @@ import router from './router'
 import './plugins/element.js'
 // 引入全局样式表global
 import './assets/css/global.css'
+//导入表格树形插件
+import ZkTable from 'vue-table-with-tree-grid'
 //导入axios
 import axios from 'axios'
 //配置axios请求跟路径
@@ -17,6 +19,9 @@ axios.interceptors.request.use(config=>{
 //Vue原型上挂载axios
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
+
+//注册组件
+Vue.component('tree-table', ZkTable)
 
 new Vue({
   router,

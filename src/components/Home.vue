@@ -6,10 +6,22 @@
 <!--    头部-->
     <el-header
       class="home-head"
+      height="10%"
     >
       <div>
-        <img src="../assets/heima.png" alt="">
-        <span>电商管理系统</span>
+        <el-avatar :size="60"
+                  >
+          <img
+            v-if="userSessionName==='admin'"
+            src="../assets/heima.png" >
+          <img
+          v-if="userSessionName==='北木'"
+          src="../assets/likeimg/weixintouxiang.jpg" >
+          <img
+            v-if="userSessionName==='桃子蘸酱油'"
+            src="../assets/likeimg/taozijiangyou.jpg" >
+        </el-avatar>
+        <span>不太正经的电商管理系统</span>
       </div>
       <el-button
         type="info"
@@ -102,14 +114,25 @@ export default {
       },
       asideWidth: '200px',
       isToggle: false,    //控制左侧导航栏展开还是折叠
-      indexActive: ''
+      indexActive: '',
     }
   },
   methods:{
     //退出账号，清空 token
     accountExit(){
-      window.sessionStorage.clear()
-      this.$router.push('/login')
+      this.$confirm('此操作将退出当前帐号，是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+          window.sessionStorage.clear()
+          this.$router.push('/login')
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消退出'
+        });
+      });
     },
     handleOpen(key,keypath){
       console.log(key,keypath)
@@ -136,6 +159,11 @@ export default {
       window.sessionStorage.setItem('activePath',activePath)
       this.indexActive = activePath
     }
+  },
+  computed:{
+    userSessionName(){
+      return window.sessionStorage.getItem('uName')
+    }
   }
 }
 </script>
@@ -157,7 +185,7 @@ export default {
   div {
     display: flex;
     justify-content: space-between;
-    width: 17%;
+    width: 23%;
     height: 100%;
     img {
       height: 100%;
