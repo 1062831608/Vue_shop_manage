@@ -10,6 +10,7 @@ import Categories from '../components/goods/Categories'
 import Params from '../components/goods/Params'
 import List from '../components/goods/List'
 import Add from '../components/goods/Add'
+import Order from '../components/order/Order'
 
 Vue.use(VueRouter)
 
@@ -35,8 +36,9 @@ const router = new VueRouter({
         { path: '/roles', component: Roles },
         { path: '/categories', component: Categories },
         { path: '/params' , component: Params },
-        { path:'/goods', component: List },
-        { path: '/goods/addpage', component: Add}
+        { path: '/goods', component: List },
+        { path: '/goods/addpage', component: Add},
+        { path: '/orders', component: Order}
       ],
       //进入 home 重定向为 welcome
       redirect: '/welcome'
