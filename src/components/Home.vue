@@ -223,7 +223,7 @@ export default {
 }
 .home-main {
   background-color: #eaedf1;
-  height: 100%;
+  height: 650px;
   overflow: auto;
 }
 </style>
