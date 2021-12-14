@@ -11,6 +11,9 @@ import Params from '../components/goods/Params'
 import List from '../components/goods/List'
 import Add from '../components/goods/Add'
 import Order from '../components/order/Order'
+import Report from '../components/report/Report'
+//用户来源echarts图表
+import UserResourceLine from '../components/echarts/UserResourceLine'
 
 Vue.use(VueRouter)
 
@@ -18,6 +21,8 @@ const router = new VueRouter({
   routes: [
     //访问网页，重定向为登录页面
     { path: '/', redirect: '/login' },
+    //访问数据报表重定向为 用户echarts图表
+    {path:'/reports', redirect: '/userresourceline'},
     { path: '/login', component: Login },
     {
       path: '/home',
@@ -38,7 +43,10 @@ const router = new VueRouter({
         { path: '/params' , component: Params },
         { path: '/goods', component: List },
         { path: '/goods/addpage', component: Add},
-        { path: '/orders', component: Order}
+        { path: '/orders', component: Order},
+        { path: '/reports', component: Report,
+          children:[{path: '/userresourceline',component: UserResourceLine}]
+        }
       ],
       //进入 home 重定向为 welcome
       redirect: '/welcome'

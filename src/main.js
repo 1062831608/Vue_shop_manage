@@ -18,6 +18,11 @@ import 'quill/dist/quill.bubble.css' // for bubble theme
 //将富文本注册全局组件
 Vue.use(VueQuillEditor)
 
+//导入echarts图表
+let echarts = require('echarts')
+//原型挂载echarts
+Vue.prototype.$echarts = echarts
+
 //导入表格树形插件
 import ZkTable from 'vue-table-with-tree-grid'
 
@@ -25,7 +30,7 @@ import ZkTable from 'vue-table-with-tree-grid'
 import axios from 'axios'
 
 //配置axios请求跟路径
-axios.defaults.baseURL="http://127.0.0.1:8888/api/private/v1/"
+axios.defaults.baseURL="http://127.0.0.1:12004/api/private/v1/"
 
 //设置axios拦截器，保证授权才可以访问授权接口
 axios.interceptors.request.use(config=>{
